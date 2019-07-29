@@ -9,8 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -84,15 +87,24 @@ public class MainActivity extends AppCompatActivity {
     public void send(String data){
         try{
             int portNumber = 5001;
-            Socket sock = new Socket("localhost", portNumber);
+//            Socket sock = new Socket("13.125.102.51", portNumber);
+            Socket sock = new Socket("127.0.0.1", portNumber);
             printClientLog("소켓 연결함.");
+//            DataOutputStream outputStream = new DataOutputStream(sock.getOutputStream());
             ObjectOutputStream outstream = new ObjectOutputStream(sock.getOutputStream());
+//            outputStream.writeUTF(data);
+//            outputStream.flush();
             outstream.writeObject(data);
             outstream.flush();
             printClientLog("데이터 전송함.");
 
+            DataInputStream inputStream = new DataInputStream(sock.getInputStream());
+//            String arr = inputStream.readUTF();
+//            printClientLog("서버로부터 받음: " + arr);
             ObjectInputStream instream = new ObjectInputStream(sock.getInputStream());
             printClientLog("서버로부터 받음: " + instream.readObject());
+
+            printClientLog("서버로부터 받은 후");
             sock.close();
         } catch(Exception ex){
             ex.printStackTrace();
@@ -109,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 Socket sock = server.accept();
                 InetAddress clientHost = sock.getLocalAddress();
                 int clientPort = sock.getPort();
+                printServerLog("inetAddress: " + sock.getInetAddress());
                 printServerLog("클라이언트 연결됨: " + clientHost + " : " + clientPort);
 
                 ObjectInputStream instream = new ObjectInputStream(sock.getInputStream());
