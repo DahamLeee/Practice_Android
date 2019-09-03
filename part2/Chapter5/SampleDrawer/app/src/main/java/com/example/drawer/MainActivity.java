@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -41,7 +43,6 @@ public class MainActivity extends AppCompatActivity
         fragment1 = new Fragment1();
         fragment2 = new Fragment2();
         fragment3 = new Fragment3();
-
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragment1).commit();
     }
 
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentSelected(int position, Bundle bundle) {
         Fragment curFragment = null;
         if(position == 0){
-            curFragment = fragment1;
+            curFragment = Fragment1.newInstacne();
             toolbar.setTitle("첫 번째 화면");
         }else if(position == 1){
             curFragment = fragment2;
@@ -90,6 +91,6 @@ public class MainActivity extends AppCompatActivity
             curFragment = fragment3;
             toolbar.setTitle("세 번째 화면");
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, curFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, curFragment).addToBackStack(null).commit();
     }
 }
