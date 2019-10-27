@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Integer doInBackground(Integer... values) {
-            while(isCancelled() == false){
+            while(!isCancelled()){
                 value++;
                 if(value >= 100){
                     break;

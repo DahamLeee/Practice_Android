@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     TextView textView;
@@ -24,6 +26,40 @@ public class MainActivity extends AppCompatActivity {
                 showMessage();
             }
         });
+    }
+
+    public void println(String data){
+        Toast.makeText(this, data, Toast.LENGTH_LONG).show();
+        Log.d("Main", data);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        println("onPause 호출됨");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        println("onResume 호출됨");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        println("onStart 호출됨");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        println("onStop 호출됨");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        println("onDestroy 호출됨");
     }
 
     private void showMessage(){
@@ -52,5 +88,7 @@ public class MainActivity extends AppCompatActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+
     }
+
 }

@@ -47,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        println("onRestart 호출됨");
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         println("onResume 호출됨");

@@ -1,5 +1,6 @@
 package com.example.samplemovie;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     MovieAdapter adapter;
 
     static RequestQueue requestQueue;
+
+    public static MovieList movieList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,13 +43,20 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
 
-        Button button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener(){
+//        Button button = findViewById(R.id.button);
+//        button.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+        new Thread(new Runnable() {
             @Override
-            public void onClick(View v) {
+            public void run() {
                 makeRequest();
             }
-        });
+        }).start();
+
         if(requestQueue == null){
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
@@ -94,12 +104,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void processResponse(String response){
         Gson gson = new Gson();
-        MovieList movieList = gson.fromJson(response, MovieList.class);
-
+        movieList = gson.fromJson(response, MovieList.class);
+        TextView textView3 = findViewById(R.id.textView3);
+        textView3.setText(movieList.result.get(0).title);
         println("영화 정보 수: " + movieList.result.size());
 
         for(int i = 0; i < movieList.result.size(); i++){
-            Movie movie = movieList.result.get(i);
+            Movie movie = movieList.result.get(i); //Movie 클래스
 
             adapter.addItem(movie);
         }
