@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
             myLocationMarker.position(curPoint);
             myLocationMarker.title("● 내 위치\n");
             myLocationMarker.snippet("● GPS로 확인한 위치");
-            myLocationMarker.icon(BitmapDescriptorFactory.fromResource(R.drawable.mylocation));
+//            myLocationMarker.icon(BitmapDescriptorFactory.fromResource(R.drawable.mylocation));
             map.addMarker(myLocationMarker);
         }
     }
